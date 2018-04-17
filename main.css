@@ -1,0 +1,47 @@
+figure {
+  margin: 0;
+}
+
+.wrapper {
+  margin: 0;
+  padding: 0;
+}
+
+.card {
+  margin: 5px;
+  float: left;
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  transform-origin: right center;
+}
+
+.flipped {
+  transform: translateX( -100% ) rotateY( -180deg );
+}
+
+.card img {
+  width: 100%;
+}
+
+.card figure {
+  display: block;
+  height: 100%;
+  width: 100%;
+  line-height: 260px;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  font-size: 140px;
+  position: absolute;
+  backface-visibility: hidden;
+}
+
+.card .front {
+  border-radius: 10px;
+  background: red;
+}
+
+.card .back {
+  border-radius: 10px;
+  transform: rotateY( 180deg );
+}
