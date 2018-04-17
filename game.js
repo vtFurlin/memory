@@ -11,6 +11,7 @@ var pointSound
 var winSound
 var badSound
 var music
+var replay
 
 function onTouch () {
   if(locked) return
@@ -28,8 +29,18 @@ function onTouch () {
         active.lastChild.lastChild.style.opacity = 0.3
         active.lastChild.lastChild.style.filter = 'grayscale(50%)'
         points += 1
-        if(points >= 10)
+        if(points >= 1) {
           winSound.play()
+          replay = document.createElement('div')
+          replay.className = 'replay'
+          replay.innerHTML = 'Replay'
+          replay.style.left = (innerWidth*.35)+'px'
+          replay.style.top = '300px'
+          replay.addEventListener('touchend', () => {
+            init()
+          })
+          wrapper.appendChild(replay)
+        }
         else
           locked = false
         active = false
@@ -100,13 +111,23 @@ fullDeck.push(new Card('Cenoura', 'cenoura', 0, 3))
 fullDeck.push(new Card('Laranja', 'laranja', 0, 3))
 fullDeck.push(new Card('Abobora', 'abobora', 0, 3))
 
-fullDeck = shuffleArray(fullDeck)
+const init = () => {
+  fullDeck = shuffleArray(fullDeck)
 
-while(fullDeck.length > 10) {
-  fullDeck.pop()
+  while(fullDeck.length > 10) {
+    fullDeck.pop()
+  }
+
+  deck = shuffleArray(fullDeck.concat(fullDeck))
+
+  wrapper.innerHTML = ''
+
+  deck.forEach((element) => {
+    element.display()
+  })
+
+  locked = false
 }
-
-deck = shuffleArray(fullDeck.concat(fullDeck))
 
 const DOMReady = (event) => {
   pointSound = new Audio('assets/point.wav')
@@ -118,9 +139,7 @@ const DOMReady = (event) => {
   innerWidth = window.innerWidth
   wrapper = document.getElementById('wrapper')
   wrapper.style.width = innerWidth+'px'
-  deck.forEach((element) => {
-    element.display()
-  })
+  init()
 }
 
 document.addEventListener("DOMContentLoaded", DOMReady)
